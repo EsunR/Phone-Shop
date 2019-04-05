@@ -1,17 +1,32 @@
 html {
   height: 100%;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
- "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   height: 100%;
   background-color: #f4f5f5 !important;
+  color: #606266;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+  color: #606266;
 }
 
 hr {
   margin: 20px 0;
-  opacity: .2;
+  opacity: 0.2;
 }
 
 /* Transtion动画 */
@@ -27,4 +42,19 @@ hr {
 .v-enter-active,
 .v-leave-active {
   transition: all 1s ease;
+}
+
+.shadow_base {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+
+.shadow_lite {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.e_card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }

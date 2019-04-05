@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 // user
 import home from './components/home.vue'
+import item from './components/item.vue'
 import cart from './components/cart.vue'
 import order from './components/order.vue'
 import userInfo from './components/userInfo.vue'
@@ -20,6 +21,10 @@ var router = new Router({
     {
       path: '/home',
       component: home
+    },
+    {
+      path: '/item/:id',
+      component: item
     },
     {
       path: '/cart',

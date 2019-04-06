@@ -8,10 +8,10 @@
         <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
           <el-menu-item index="home">首页</el-menu-item>
           <el-submenu index="select">
-            <template slot="title">用户中心</template>
+            <template slot="title">菜单</template>
             <el-menu-item index="cart">购物车</el-menu-item>
             <el-menu-item index="order">已购买</el-menu-item>
-            <el-menu-item index="userInfo">个人信息</el-menu-item>
+            <el-menu-item index="userInfo">用户中心</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-header>

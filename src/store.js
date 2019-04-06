@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    uid: '233',
     account: "123456",
     name: "李大帅",
     money: 9999,

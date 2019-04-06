@@ -37,7 +37,7 @@
         </div>
 
         <div class="bottom">
-          <el-input-number v-model="count" :min="1" :max="10" label="描述文字"></el-input-number>
+          <el-input-number v-model="count" :min="1" :max="10"></el-input-number>
           <div class="btn_box">
             <el-button icon="el-icon-sold-out" @click="addCart">加入购物车</el-button>
             <el-button type="primary" icon="el-icon-goods" @click="bought">购买</el-button>
@@ -45,8 +45,6 @@
         </div>
       </div>
     </div>
-    <div class="article"></div>
-
     <el-dialog title="请确认订单" :visible.sync="dialogVisible" width="50%">
       <div class="body">
         <div class="item">购买颜色：{{order.color}}</div>
@@ -61,10 +59,33 @@
         <el-button type="primary" @click="createOrder">确 定</el-button>
       </span>
     </el-dialog>
+
+    <div class="select_bar">
+      <div
+        class="selector"
+        :class="{active: active == 'information'}"
+        @click="handelSelector('information')"
+      >商品详情</div>
+      <div
+        class="selector"
+        :class="{active: active == 'comment'}"
+        @click="handelSelector('comment')"
+      >商品评论</div>
+    </div>
+    <div class="view_box">
+      <transition>
+        <information v-show="active == 'information'" :introduction="itemData.introduction"></information>
+      </transition>
+      <transition>
+        <comment v-show="active == 'comment'" :itemId="$route.params.id"></comment>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
+import information from "./subComponents/information.vue";
+import comment from "./subComponents/comment.vue";
 export default {
   data() {
     return {
@@ -94,10 +115,18 @@ export default {
         sort: "",
         price: "",
         count: ""
-      }
+      },
+      active: "information"
     };
   },
+  components: {
+    information,
+    comment
+  },
   methods: {
+    handelSelector(opration) {
+      this.active = opration;
+    },
     selectColor(index) {
       this.colorIndex = index;
     },
@@ -115,16 +144,16 @@ export default {
       };
       // TODO: 加入购物车
       this.axios
-        .post('/addCart', obj)
+        .post("/addCart", obj)
         .then(res => {
           if (res.data.code == 1) {
-            this.$message.success('加入购物车成功');
+            this.$message.success("加入购物车成功");
           }
-      })
-      .catch(err => {
-        console.log(err);
-        this.$message('服务器无法连接');
-      });
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接");
+        });
     },
     bought() {
       if (this.$store.state.receive == "") {
@@ -252,12 +281,31 @@ export default {
   .body {
     .item {
       margin-bottom: 10px;
-      font-size: 16px;
+      font-size: 14px;
     }
     .price {
-      font-size: 20px;
+      font-size: 18px;
       color: #ff6700;
     }
+  }
+}
+
+.select_bar {
+  margin: 20px 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  overflow: hidden;
+  .selector {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  .active {
+    background-color: #409eff;
+    color: white;
   }
 }
 </style>

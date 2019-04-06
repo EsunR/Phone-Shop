@@ -2,7 +2,7 @@
   <div id="itemList">
     <el-row :gutter="20">
       <el-col :span="8" v-for="item in itemList" :key="item.id">
-        <div class="list shadow_base" @click="$router.push('/item/' + item.id)">
+        <div class="list shadow_base" @click="itemClick(item)">
           <div class="img_box" :style="`background: url(${item.cover});`"></div>
           <div class="title">
             {{item.title}}
@@ -85,7 +85,7 @@ export default {
       total: 0
     };
   },
-  props: ["keyWords"],
+  props: ["keyWords", "mod"],
   methods: {
     // TODO:
     getItemList() {
@@ -110,6 +110,13 @@ export default {
     getMore() {
       this.page++;
       this.getItemList();
+    },
+    itemClick(item) {
+      if (this.mod == "admin") {
+        this.$router.push("/itemManage/modifyItem/" + item.id);
+      } else {
+        this.$router.push("/item/" + item.id);
+      }
     }
   },
   mounted() {
@@ -127,13 +134,13 @@ export default {
 
 <style lang='scss' scoped>
 #itemList {
-  margin-top: 30px;
+  margin-top: 20px;
   .list {
     border-radius: 10px;
     overflow: hidden;
     background-color: #fff;
     cursor: pointer;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     &:hover {
       background-color: #409eff;
       color: white !important;

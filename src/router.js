@@ -8,6 +8,13 @@ import cart from './components/cart.vue'
 import order from './components/order.vue'
 import userInfo from './components/userInfo.vue'
 
+// admin
+import orderManage from './components/admin/orderManage.vue'
+import userManage from './components/admin/userManage.vue'
+import itemManage from './components/admin/itemManage.vue'
+import modifyItem from './components/admin/modifyItem.vue'
+import addItem from './components/admin/addItem.vue'
+
 // import global from './common.vue'
 Vue.use(Router)
 
@@ -37,6 +44,26 @@ var router = new Router({
     {
       path: '/userInfo',
       component: userInfo
+    },
+    {
+      path: '/orderManage',
+      component: orderManage
+    },
+    {
+      path: '/userManage',
+      component: userManage
+    },
+    {
+      path: '/itemManage',
+      component: itemManage
+    },
+    {
+      path: '/itemManage/modifyItem/:id',
+      component: modifyItem
+    },
+    {
+      path: '/itemManage/addItem',
+      component: addItem
     }
   ]
 })
@@ -46,7 +73,7 @@ router.beforeEach((to, from, next) => {
     // console.log("get success");
     next();
   } else {
-    console.log("no token!");
+    // console.log("no token!");
     // window.location.href = global.login_location
     next();
   }

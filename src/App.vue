@@ -6,6 +6,9 @@
           <i class="el-icon-mobile-phone"></i> 手机销售系统
         </div>
         <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="itemManage">商品管理</el-menu-item>
+          <el-menu-item index="orderManage">订单管理</el-menu-item>
+          <el-menu-item index="userManage">用户管理</el-menu-item>
           <el-menu-item index="home">首页</el-menu-item>
           <el-submenu index="select">
             <template slot="title">菜单</template>
@@ -55,6 +58,7 @@ export default {
     }
   },
   mounted() {
+    this.activeIndex = this.$route.path.split("/")[1];
     // this.getUserInfo();
   }
 };

@@ -37,11 +37,24 @@
         </div>
 
         <div class="bottom">
-          <el-input-number v-model="count" :min="1" :max="10"></el-input-number>
+          <el-input-number v-if="itemData.status == 1" v-model="count" :min="1" :max="10"></el-input-number>
+
           <div class="btn_box">
-            <el-button icon="el-icon-sold-out" @click="addCart">加入购物车</el-button>
-            <el-button type="primary" icon="el-icon-goods" @click="bought">购买</el-button>
+            <el-button v-if="itemData.status == 1" icon="el-icon-sold-out" @click="addCart">加入购物车</el-button>
+            <el-button
+              v-if="itemData.status == 1"
+              type="primary"
+              icon="el-icon-goods"
+              @click="bought"
+            >购买</el-button>
           </div>
+
+          <el-button
+            v-if="itemData.status == 0"
+            icon="el-icon-circle-close"
+            type="info"
+            disabled
+          >商品已下架</el-button>
         </div>
       </div>
     </div>

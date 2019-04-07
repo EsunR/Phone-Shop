@@ -1,11 +1,11 @@
 <template>
   <div id="modifyItem">
+    <h1>商品信息</h1>
     <div class="top e_card">
       <div class="img_box">
         <img :src="itemData.cover">
       </div>
       <div class="info_box">
-
         <div class="title info">{{itemData.title}} [基本信息]</div>
         <hr>
         <div class="sale info">销售量：{{itemData.saleNum}}件</div>
@@ -28,40 +28,61 @@
             </el-col>
           </el-row>
         </div>
-
       </div>
     </div>
+
+    <h1>更改商品信息</h1>
+    <itemForm class="itemForm" :itemData="itemData"></itemForm>
   </div>
 </template>
 
 <script>
+import itemForm from "../subComponents/itemForm.vue";
 export default {
   data() {
     return {
       itemData: {
-        id: 1,
-        title: "小米9 青春版",
-        price: "1999",
-        saleNum: 100,
-        stock: 1000,
-        introduction: "<p>商品介绍</p>",
-        color: ["蓝色", "红色", "黑色"],
-        sort: [
-          { sort: "6G+128G", price: "1999" },
-          { sort: "8G+128G", price: "2399" },
-          { sort: "9G+128G", price: "3999" },
-          { sort: "12G+128G", price: "4399" }
-        ],
-        status: 1,
-        cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg"
+        id: "",
+        title: "",
+        price: "",
+        saleNum: "",
+        stock: "",
+        introduction: "",
+        color: [],
+        sort: [],
+        status: "",
+        cover: ""
       }
     };
+  },
+  components: {
+    itemForm
+  },
+  methods: {
+    getItem() {
+      this.axios
+        .get("/getItem?id=" + this.$route.params.id)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.itemData = res.data.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接");
+        });
+    }
+  },
+  mounted() {
+    this.getItem();
   }
 };
 </script>
 
 <style lang='scss' scoped>
 .top {
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   .img_box {
     width: 460px;
@@ -113,5 +134,8 @@ export default {
       border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
     }
   }
+}
+.itemForm {
+  margin-top: 20px;
 }
 </style>

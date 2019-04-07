@@ -6,14 +6,14 @@
           <i class="el-icon-mobile-phone"></i> 手机销售系统
         </div>
         <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="itemManage">商品管理</el-menu-item>
-          <el-menu-item index="orderManage">订单管理</el-menu-item>
-          <el-menu-item index="userManage">用户管理</el-menu-item>
-          <el-menu-item index="home">首页</el-menu-item>
+          <el-menu-item index="itemManage" v-if="identity == 'admin'">商品管理</el-menu-item>
+          <el-menu-item index="orderManage" v-if="identity == 'admin'">订单管理</el-menu-item>
+          <el-menu-item index="userManage" v-if="identity == 'admin'">用户管理</el-menu-item>
+          <el-menu-item index="home" v-if="identity == 'user'">首页</el-menu-item>
           <el-submenu index="select">
-            <template slot="title">菜单</template>
-            <el-menu-item index="cart">购物车</el-menu-item>
-            <el-menu-item index="order">已购买</el-menu-item>
+            <template slot="title" v-if="identity == 'admin'">菜单</template>
+            <el-menu-item index="cart" v-if="identity == 'user'">购物车</el-menu-item>
+            <el-menu-item index="order" v-if="identity == 'user'">已购买</el-menu-item>
             <el-menu-item index="userInfo">用户中心</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -31,7 +31,8 @@
 export default {
   data() {
     return {
-      activeIndex: "home"
+      activeIndex: "home",
+      identity: ""
     };
   },
   methods: {
@@ -40,9 +41,10 @@ export default {
         .get("/getUserInfo")
         .then(res => {
           if (res.data.code == 1) {
-            this.$store.state.commit("setData", this.data.data);
+            this.identity = res.data.data.identity;
+            this.$store.commit("setData", res.data.data);
             if (this.$store.state.identity == "admin") {
-              this.$router.push("/admin");
+              this.$router.push("/itemManage");
             } else {
               this.$router.push("/");
             }
@@ -59,7 +61,7 @@ export default {
   },
   mounted() {
     this.activeIndex = this.$route.path.split("/")[1];
-    // this.getUserInfo();
+    this.getUserInfo();
   }
 };
 </script>

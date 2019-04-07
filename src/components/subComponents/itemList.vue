@@ -32,56 +32,7 @@ export default {
   data() {
     return {
       page: "1",
-      itemList: [
-        {
-          id: 1,
-          title: "小米手机9",
-          price: 2999,
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          saleNum: 100,
-          status: 1
-        },
-        {
-          id: 2,
-          title: "小米手机9",
-          price: 2999,
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          saleNum: 100,
-          status: 0
-        },
-        {
-          id: 3,
-          title: "小米手机9",
-          price: 2999,
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          saleNum: 100,
-          status: 1
-        },
-        {
-          id: 4,
-          title: "小米手机9",
-          price: 2999,
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          saleNum: 100,
-          status: 1
-        },
-        {
-          id: 5,
-          title: "小米手机9",
-          price: 2999,
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          saleNum: 100,
-          status: 1
-        },
-        {
-          id: 6,
-          title: "小米手机9",
-          price: 2999,
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          saleNum: 100,
-          status: 1
-        }
-      ],
+      itemList: [],
       total: 0
     };
   },

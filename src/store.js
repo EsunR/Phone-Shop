@@ -5,12 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    uid: '233',
-    account: "123456",
-    name: "李大帅",
-    money: 9999,
-    identity: "user",
-    receive: "河南省安阳市文峰区安阳工学院 李大帅 12345678789"
+    uid: '',
+    account: "",
+    name: "",
+    money: "",
+    identity: "",
+    receive: ""
   },
   mutations: {
     setData(state,obj){

@@ -4,6 +4,7 @@
       <i class="el-icon-goods"></i> 已购买的商品
     </h1>
     <div class="order_list">
+      <div class="e_card" v-if="orderList.length == 0" style="margin-top: 20px;">暂无商品</div>
       <div class="list e_card" v-for="item in orderList" :key="item.id">
         <div class="img_box">
           <img :src="item.cover">
@@ -91,120 +92,7 @@
 export default {
   data() {
     return {
-      orderList: [
-        {
-          id: 1,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "Huawei/华为 畅享9",
-          cover:
-            "https://g-search2.alicdn.com/img/bao/uploaded/i4/i2/2838892713/O1CN01wYvoJf1Vub2QtC1Fq_!!0-item_pic.jpg_250x250.jpg_.webp",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: 1,
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        },
-        {
-          id: 2,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "荣耀8X",
-          cover:
-            "https://img.alicdn.com/imgextra/i1/1114511827/O1CN011PMo4vXcCkPkhJS_!!1114511827.jpg_430x430q90.jpg",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: "2",
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        },
-        {
-          id: 3,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "荣耀8X",
-          cover:
-            "https://img.alicdn.com/imgextra/i1/1114511827/O1CN011PMo4vXcCkPkhJS_!!1114511827.jpg_430x430q90.jpg",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: 3,
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        },
-        {
-          id: 4,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "荣耀8X",
-          cover:
-            "https://img.alicdn.com/imgextra/i1/1114511827/O1CN011PMo4vXcCkPkhJS_!!1114511827.jpg_430x430q90.jpg",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: 4,
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        },
-        {
-          id: 5,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "荣耀8X",
-          cover:
-            "https://img.alicdn.com/imgextra/i1/1114511827/O1CN011PMo4vXcCkPkhJS_!!1114511827.jpg_430x430q90.jpg",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: 5,
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        },
-        {
-          id: 6,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "荣耀8X",
-          cover:
-            "https://img.alicdn.com/imgextra/i1/1114511827/O1CN011PMo4vXcCkPkhJS_!!1114511827.jpg_430x430q90.jpg",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: 6,
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        },
-        {
-          id: 7,
-          uid: 1,
-          userName: "李大帅",
-          itemId: 1,
-          title: "荣耀8X",
-          cover:
-            "https://img.alicdn.com/imgextra/i1/1114511827/O1CN011PMo4vXcCkPkhJS_!!1114511827.jpg_430x430q90.jpg",
-          color: "少女粉",
-          sort: "8G+128G",
-          price: 2999,
-          status: 7,
-          delivery: 123456789,
-          time: 1554449715000,
-          receive: "河南省安阳市文峰区安阳工学院 李大帅 11111111111"
-        }
-      ],
+      orderList: [],
       page: 1,
       total: 0,
       selectedItem: {
@@ -253,7 +141,6 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // TODO: 申请退货
           this.axios
             .get("/backOrder?id=" + id)
             .then(res => {

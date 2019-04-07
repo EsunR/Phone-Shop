@@ -10,7 +10,7 @@
         @click="logout"
       >注销</el-button>
     </h1>
-    <div class="panel e_card">
+    <div class="panel e_card" v-if="this.$store.state.identity == 'user'">
       <div class="title">个人信息</div>
       <hr>
       <el-form :model="userInfo" ref="userInfo" :label-position="'top'">
@@ -60,7 +60,7 @@
       >确定修改</el-button>
     </div>
 
-    <div class="panel e_card">
+    <div class="panel e_card" v-if="this.$store.state.identity == 'user'">
       <div class="title">账户余额：{{money}} 元</div>
       <hr>
       <el-input v-model="recharge">
@@ -75,15 +75,15 @@ export default {
   data() {
     return {
       userInfo: {
-        name: "李大帅",
-        receive: "中国北京市西城区南长街天安门西侧中 李大帅 12222233333"
+        name: "",
+        receive: ""
       },
       password: {
         oldPwd: "",
         newPwd: ""
       },
       rules: [],
-      money: 10000,
+      money: "",
       recharge: ""
     };
   },
@@ -93,7 +93,7 @@ export default {
         .get("/getUserInfo")
         .then(res => {
           if (res.data.code == 1) {
-            this.$store.state.commit("setData", this.data.data);
+            this.$store.commit("setData", res.data.data);
             this.userInfo.name = res.data.data.name;
             this.userInfo.receive = res.data.data.receive;
             this.money = res.data.data.money;
@@ -129,7 +129,6 @@ export default {
         this.$message.error("内容不能为空");
         return;
       } else {
-        // TODO: 修改密码
         this.axios
           .post("/modifyPwd", this.password)
           .then(res => {
@@ -152,12 +151,12 @@ export default {
         this.$message.error("请检查输入的内容");
         return;
       }
-      // TODO: 账户充值
       this.axios
         .get("/recharge?money=" + this.recharge)
         .then(res => {
           if (res.data.code == 1) {
             this.$message.success("充值成功");
+            this.recharge = 0;
             this.getSetUserInfo();
           }
         })
@@ -170,6 +169,9 @@ export default {
       window.location.href = this.COMMON.login_location;
       localStorage.clear();
     }
+  },
+  mounted() {
+    this.getSetUserInfo();
   }
 };
 </script>

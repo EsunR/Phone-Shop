@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import global from './common.vue'
+
 
 // user
 import home from './components/home.vue'
@@ -15,12 +17,10 @@ import itemManage from './components/admin/itemManage.vue'
 import modifyItem from './components/admin/modifyItem.vue'
 import addItem from './components/admin/addItem.vue'
 
-// import global from './common.vue'
 Vue.use(Router)
 
 var router = new Router({
   routes: [
-    // path name component
     {
       path: '/',
       redirect: '/home'
@@ -73,8 +73,8 @@ router.beforeEach((to, from, next) => {
     // console.log("get success");
     next();
   } else {
-    // console.log("no token!");
-    // window.location.href = global.login_location
+    console.log("no token!");
+    window.location.href = global.login_location
     next();
   }
 })

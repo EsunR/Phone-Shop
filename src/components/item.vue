@@ -103,21 +103,16 @@ export default {
   data() {
     return {
       itemData: {
-        id: 1,
-        title: "小米9 青春版",
-        price: "1999",
-        saleNum: 100,
-        stock: 1000,
-        introduction: "<p>商品介绍</p>",
-        color: ["蓝色", "红色", "黑色"],
-        sort: [
-          { sort: "6G+128G", price: "1999" },
-          { sort: "8G+128G", price: "2399" },
-          { sort: "9G+128G", price: "3999" },
-          { sort: "12G+128G", price: "4399" }
-        ],
-        status: 1,
-        cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg"
+        id: "",
+        title: "",
+        price: "",
+        saleNum: "",
+        stock: "",
+        introduction: "",
+        color: [],
+        sort: [],
+        status: "",
+        cover: ""
       },
       colorIndex: 0,
       sortIndex: 0,
@@ -155,7 +150,6 @@ export default {
         time: Date.parse(new Date()).toString(),
         count: this.count.toString()
       };
-      // TODO: 加入购物车
       this.axios
         .post("/addCart", obj)
         .then(res => {
@@ -192,7 +186,6 @@ export default {
         this.$message.error("您的账户余额不足，结算失败");
         return;
       } else {
-        // TODO: 购买商品
         this.axios
           .post("/createOrder", this.order)
           .then(res => {
@@ -208,7 +201,6 @@ export default {
       }
     },
     getItem() {
-      // TODO: 获取商品详情
       this.axios
         .get("/getItem?id=" + this.$route.params.id)
         .then(res => {

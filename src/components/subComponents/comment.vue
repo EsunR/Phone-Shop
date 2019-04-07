@@ -1,5 +1,6 @@
 <template>
   <div id="comment">
+    <div class="e_card" v-if="commentList.length == 0">暂无评论</div>
     <div class="list e_card" v-for="item in commentList" :key="item.id">
       <div class="header">
         <div class="name">用户：{{item.name}}</div>
@@ -21,22 +22,7 @@
 export default {
   data() {
     return {
-      commentList: [
-        {
-          id: "1",
-          name: "李大帅",
-          star: 5,
-          content: "这手机真棒!",
-          time: "1554531634000"
-        },
-        {
-          id: "2",
-          name: "李大帅",
-          star: 5,
-          content: "这手机真棒!",
-          time: "1554531634000"
-        }
-      ]
+      commentList: []
     };
   },
   props: ["itemId"],

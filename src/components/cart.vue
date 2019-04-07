@@ -4,6 +4,7 @@
       <i class="el-icon-sold-out"></i> 购物车
     </h1>
     <div class="cart_list">
+      <div class="e_card" v-if="cartList.length == 0" style="margin-top: 20px;">暂无商品</div>
       <div class="list e_card" v-for="item in cartList" :key="item.id">
         <div class="img_box">
           <img :src="item.cover">
@@ -47,28 +48,7 @@
 export default {
   data() {
     return {
-      cartList: [
-        {
-          id: "1", // 购物车id
-          itemId: "1",
-          title: "小米9",
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          count: "1",
-          color: "红色",
-          sort: "8+128G",
-          price: "1000" // 这里的price是商品单价
-        },
-        {
-          id: "2", // 购物车id
-          itemId: "1",
-          title: "小米9",
-          cover: "https://i8.mifile.cn/a1/pms_1550642240.48638886.jpg",
-          count: "1",
-          color: "红色",
-          sort: "8+128G",
-          price: "1000" // 这里的price是商品单价
-        }
-      ],
+      cartList: [],
       order: {
         color: "",
         sort: "",
@@ -81,7 +61,6 @@ export default {
   },
   methods: {
     getCartList() {
-      // TODO: 获取购物车列表
       this.axios
         .get("/getCartList")
         .then(res => {
@@ -119,7 +98,6 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // TODO: 删除购物车
           this.axios
             .get("/deleteCart?id=" + id)
             .then(res => {
@@ -145,7 +123,6 @@ export default {
         this.$message.error("您的账户余额不足，结算失败");
         return;
       } else {
-        // TODO: 购买商品
         this.axios
           .post("/createOrder", this.order)
           .then(res => {

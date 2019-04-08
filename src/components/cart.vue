@@ -19,7 +19,12 @@
               <div class="sort">所选配置：{{item.sort}}</div>
             </div>
             <div class="right">
-              <el-input-number v-model="item.count" :min="1"></el-input-number>
+              <el-input-number
+                @change="numberChange(item.id, item.count)"
+                v-model="item.count"
+                :min="1"
+                :max="50"
+              ></el-input-number>
               <el-button @click="deleteCart(item.id)">删除</el-button>
               <el-button type="primary" @click="bought(item)">购买</el-button>
             </div>
@@ -137,6 +142,22 @@ export default {
             this.$message("服务器无法连接");
           });
       }
+    },
+    numberChange(id, count) {
+      this.axios
+        .post("/modifyCart", {
+          id: id.toString(),
+          count: count.toString()
+        })
+        .then(res => {
+          if (res.data.code == 1) {
+            return;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接");
+        });
     }
   },
   created() {

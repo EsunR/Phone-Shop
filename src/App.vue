@@ -11,7 +11,7 @@
           <el-menu-item index="userManage" v-if="identity == 'admin'">用户管理</el-menu-item>
           <el-menu-item index="home" v-if="identity == 'user'">首页</el-menu-item>
           <el-submenu index="select">
-            <template slot="title" v-if="identity == 'admin'">菜单</template>
+            <template slot="title" style="font-size: 16px;">菜单</template>
             <el-menu-item index="cart" v-if="identity == 'user'">购物车</el-menu-item>
             <el-menu-item index="order" v-if="identity == 'user'">已购买</el-menu-item>
             <el-menu-item index="userInfo">用户中心</el-menu-item>

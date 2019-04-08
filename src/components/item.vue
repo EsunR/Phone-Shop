@@ -8,7 +8,14 @@
         <div class="title info">{{itemData.title}}</div>
         <hr>
         <div class="sale info">销售量：{{itemData.saleNum}}件</div>
-        <div class="stock info">库存: {{itemData.stock}}件</div>
+        <div class="stock info">
+          库存: {{itemData.stock}}件
+          <el-tag
+            type="danger"
+            v-if="itemData.stock <= 0"
+            style="position: relative; left: 10px;"
+          >已售罄</el-tag>
+        </div>
 
         <div class="color info">
           <div class="label">可选颜色：</div>
@@ -37,7 +44,12 @@
         </div>
 
         <div class="bottom">
-          <el-input-number v-if="itemData.status == 1" v-model="count" :min="1" :max="10"></el-input-number>
+          <el-input-number
+            v-if="itemData.status == 1"
+            v-model="count"
+            :min="1"
+            :max="itemData.stock"
+          ></el-input-number>
 
           <div class="btn_box">
             <el-button v-if="itemData.status == 1" icon="el-icon-sold-out" @click="addCart">加入购物车</el-button>
@@ -46,6 +58,7 @@
               type="primary"
               icon="el-icon-goods"
               @click="bought"
+              :disabled="Number(itemData.stock) <= 0"
             >购买</el-button>
           </div>
 

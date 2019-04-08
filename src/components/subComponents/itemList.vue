@@ -1,5 +1,6 @@
 <template>
   <div id="itemList">
+    <div class="e_card" v-if="itemList.length == 0">暂无相关商品</div>
     <el-row :gutter="20">
       <el-col :span="8" v-for="item in itemList" :key="item.id">
         <div class="list shadow_base" @click="itemClick(item)">
@@ -38,7 +39,6 @@ export default {
   },
   props: ["keyWords", "mod"],
   methods: {
-    // TODO:
     getItemList() {
       let params = {};
       params.page = this.page;
@@ -49,7 +49,7 @@ export default {
         .get("/getItemList", { params })
         .then(res => {
           if (res.data.code == 1) {
-            this.count = res.data.data.count;
+            this.total = res.data.data.total;
             this.itemList = [...this.itemList, ...res.data.data.itemList];
           }
         })
@@ -92,6 +92,7 @@ export default {
     background-color: #fff;
     cursor: pointer;
     margin-bottom: 20px;
+    height: 430px;
     &:hover {
       background-color: #409eff;
       color: white !important;

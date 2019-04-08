@@ -1,5 +1,5 @@
 <template>
-  <div id="order">
+  <div id="order" v-loading="loading" element-loading-text="拼命加载中">
     <h1>
       <i class="el-icon-goods"></i> 已购买的商品
     </h1>
@@ -41,7 +41,7 @@
     </div>
     <el-button
       v-if="orderList.length < total"
-      style="margin: 0 auto; display: flex; margin-bottom: 50px;"
+      style="margin: 0 auto; display: flex; margin-bottom: 50px; margin-top: 20px;"
       icon="el-icon-more-outline"
       type="primary"
       @click="getMore"
@@ -62,7 +62,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="commentDialog = false">取 消</el-button>
-        <el-button type="primary" @click="commentItem(selectedItem.itemId)">发布评价</el-button>
+        <el-button type="primary" @click="commentItem">发布评价</el-button>
       </span>
     </el-dialog>
 
@@ -92,6 +92,7 @@
 export default {
   data() {
     return {
+      loading: false,
       orderList: [],
       page: 1,
       total: 0,
@@ -103,6 +104,7 @@ export default {
       },
       commentDialog: false,
       comment: {
+        id: "",
         itemId: "",
         star: 5,
         content: ""
@@ -112,6 +114,7 @@ export default {
   },
   methods: {
     getOrderList() {
+      this.loading = true;
       this.axios
         .get("/getOrderList", {
           params: {
@@ -123,10 +126,12 @@ export default {
           if (res.data.code == 1) {
             this.total = res.data.data.count;
             this.orderList = [...this.orderList, ...res.data.data.orderList];
+            this.loading = false;
           }
         })
         .catch(err => {
           console.log(err);
+          this.loading = false;
           this.$message("服务器无法连接");
         });
     },
@@ -173,7 +178,6 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // TODO: 确认收货
           this.axios
             .get("/receiveOrder?id=" + id)
             .then(res => {
@@ -208,36 +212,34 @@ export default {
       });
     },
     commentClick(item) {
-      this.selectedItem = item;
-      this.comment.itemId = item.itemId;
       this.comment = {
         itemId: "",
         star: 5,
         content: ""
       };
+      this.selectedItem = item;
+      this.comment.itemId = item.itemId;
+      this.comment.id = item.id;
       this.commentDialog = true;
     },
-    commentItem(id) {
+    commentItem() {
       if (this.comment.content == "") {
         this.$message.error("评论内容不能为空！");
         return;
       }
       let obj = {};
+      obj.id = this.comment.id.toString();
       obj.itemId = this.comment.itemId.toString();
       obj.star = this.comment.star.toString();
       obj.content = this.comment.content.toString();
-      // TODO: 评论商品
+      obj.time = Date.parse(new Date()).toString();
       this.axios
         .post("/commentItem", obj)
         .then(res => {
           if (res.data.code == 1) {
+            this.commentDialog = false;
             this.$message.success("评论成功");
-            this.alterStatus(id, 7);
-            this.comment = {
-              itemId: "",
-              star: 5,
-              content: ""
-            };
+            this.alterStatus(obj.id, 7);
           }
         })
         .catch(err => {
@@ -253,7 +255,7 @@ export default {
       window.open("http://www.kuaidi100.com/");
     }
   },
-  mounted(){
+  mounted() {
     this.getOrderList();
   }
 };

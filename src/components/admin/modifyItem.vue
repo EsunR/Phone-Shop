@@ -32,7 +32,9 @@
     </div>
 
     <h1>更改商品信息</h1>
+
     <itemForm class="itemForm" :itemData="itemData"></itemForm>
+    
   </div>
 </template>
 

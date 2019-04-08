@@ -14,6 +14,7 @@
             <template slot="title" style="font-size: 16px;">菜单</template>
             <el-menu-item index="cart" v-if="identity == 'user'">购物车</el-menu-item>
             <el-menu-item index="order" v-if="identity == 'user'">已购买</el-menu-item>
+            <el-menu-item index="income" v-if="identity == 'admin'">收入查看</el-menu-item>
             <el-menu-item index="userInfo">用户中心</el-menu-item>
           </el-submenu>
         </el-menu>

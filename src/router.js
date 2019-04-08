@@ -16,6 +16,7 @@ import userManage from './components/admin/userManage.vue'
 import itemManage from './components/admin/itemManage.vue'
 import modifyItem from './components/admin/modifyItem.vue'
 import addItem from './components/admin/addItem.vue'
+import income from './components/admin/income.vue'
 
 Vue.use(Router)
 
@@ -64,6 +65,10 @@ var router = new Router({
     {
       path: '/itemManage/addItem',
       component: addItem
+    },
+    {
+      path: '/income',
+      component: income
     }
   ]
 })

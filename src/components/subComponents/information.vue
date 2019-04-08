@@ -1,6 +1,6 @@
 <template>
   <div id="information">
-    <div class="e_card" v-html="introduction"></div>
+    <div class="e_card main" v-html="introduction"></div>
   </div>
 </template>
 
@@ -17,9 +17,16 @@ export default {
 </style>
 
 <style lang="scss">
-#information{
-  p{
-    text-indent: 2em;
+.main{
+  box-sizing: border-box;
+  line-height: 1.7;
+  padding: 30px !important;
+  dd{
+    margin-left: 0;
+  }
+  img{
+    width: 100%;
+    border-radius: 10px;
   }
 }
 </style>
